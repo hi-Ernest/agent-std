@@ -1,0 +1,11 @@
+{
+  "name": "langchain-mini-example",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "openai": "^4.28.0",
+    "@langchain/core": "^0.1.25",
+    "langchain": "^0.1.25",
+    "dotenv": "^16.4.5"
+  }
+}

@@ -1,11 +1,22 @@
 {
-  "name": "langchain-mini-example",
+  "name": "langchain-translation",
   "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "type": "module",
   "dependencies": {
-    "openai": "^4.28.0",
-    "@langchain/core": "^0.1.25",
-    "langchain": "^0.1.25",
-    "dotenv": "^16.4.5"
+    "@langchain/core": "^0.3.72",
+    "@langchain/openai": "^0.6.9",
+    "dotenv": "^17.2.1",
+    "https-proxy-agent": "^7.0.6",
+    "langchain": "^0.3.31",
+    "openai": "^5.16.0",
+    "undici": "^7.15.0"
   }
 }

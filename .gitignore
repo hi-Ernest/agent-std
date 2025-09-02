@@ -45,3 +45,5 @@ next-env.d.ts
 
 # Optional eslint cache
 .eslintcache
+
+agent-memory.json

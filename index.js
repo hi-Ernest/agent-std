@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { ProxyAgent, setGlobalDispatcher } from "undici";
+import fs from "fs/promises";
+import path from "path";
 
 setGlobalDispatcher(new ProxyAgent(process.env.HTTPS_PROXY));
 // 1) 加载环境变量
@@ -17,7 +19,6 @@ const model = new ChatOpenAI({
 
 async function translate(text, targetLanguage) {
   try {
-    // 快速检查 key 是否加载
     console.log(process.env.OPENAI_API_KEY);
     console.log(process.env.HTTPS_PROXY);
     console.log("Preparing translation request...");
@@ -67,6 +68,32 @@ async function main() {
   try {
     const out = await translate("Hello, how are you?", "Chinese");
     console.log("Translation:", out);
+
+    // 保存响应到 JSON 文件
+    const memoryData = {
+      timestamp: new Date().toISOString(),
+      input: "Hello, how are you?",
+      targetLanguage: "Chinese",
+      translation: out,
+      model: "gpt-3.5-turbo",
+    };
+
+    // 保存到本地 JSON 文件
+    const memoryFile = path.join(process.cwd(), "agent-memory.json");
+
+    // 读取现有记忆或创建新的
+    let memories = [];
+    try {
+      const content = await fs.readFile(memoryFile, "utf8");
+      memories = JSON.parse(content);
+    } catch (error) {
+      console.log("Creating new memory file...");
+    }
+
+    // 添加新记忆并保存
+    memories.push(memoryData);
+    await fs.writeFile(memoryFile, JSON.stringify(memories, null, 2), "utf8");
+    console.log("Memory saved to agent-memory.json");
   } catch (e) {
     console.error("Error:", e?.message || e);
   }
